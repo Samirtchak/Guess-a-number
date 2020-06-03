@@ -1,5 +1,5 @@
 import React, {useState,useRef,useEffect} from  'react';
-import {Text,View,StyleSheet,Button,Alert} from 'react-native';
+import {Text,View,StyleSheet,Button,Alert,ScrollView} from 'react-native';
 import Card from "../components/Card";
 
 
@@ -19,15 +19,16 @@ const  generateRandomBetween = (min,max,exclude) => {
 
 
  function GameScreen(props) {
-    const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1,100,props.userChoice));
-     const[numberOfRound, setNumberOfRound] = useState(0);
+    const initialGuess = generateRandomBetween(1,100,props.userChoice);
+    const [currentGuess, setCurrentGuess] = useState(initialGuess);
+     const[pastGuess, setPastGuess] = useState([initialGuess]);
 
      const currentLow=useRef(1);
     const currentHigh=useRef(100);
 
     useEffect(() =>{
         if(currentGuess === props.userChoice){
-            props.onGameOver(numberOfRound);
+            props.onGameOver(pastGuess.length);
         }
     })
 
@@ -42,13 +43,13 @@ const  generateRandomBetween = (min,max,exclude) => {
                  currentHigh.current=currentGuess;
              }
              else{
-                 currentLow.current=currentGuess;
+                 currentLow.current=currentGuess + 1;
              }
 
          }
          const nextGuess = generateRandomBetween(currentLow.current,currentHigh.current,currentGuess);
          setCurrentGuess(nextGuess);
-         setNumberOfRound(currRound => currRound + 1);
+         setPastGuess(currPastGuest => [nextGuess,...currPastGuest]);
 
              }
 
@@ -60,6 +61,11 @@ const  generateRandomBetween = (min,max,exclude) => {
                 <Button title="LOWER" onPress={guessNextNumber.bind(this,'Low')}/>
                 <Button title="GREATER" onPress={guessNextNumber.bind(this,'High')}/>
             </Card>
+                <Text>Current Guesses:</Text>
+                <ScrollView>
+                    {pastGuess.map(guess =><View key={guess}><Text>{guess}</Text></View>)}
+
+                </ScrollView>
 
 
             </View>
