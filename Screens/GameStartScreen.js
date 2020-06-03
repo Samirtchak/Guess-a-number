@@ -33,7 +33,7 @@ function GameStartScreen(props) {
          output = <View style={styles.output}>
                     <Text style={styles.textSelect}>Selected number is:</Text>
                     <Text style={styles.textNumber}>{selectedNumber}</Text>
-                    <Button title="START GAME"/>
+                    <Button title="START GAME" onPress={() => props.onStartGame(selectedNumber)}/>
                   </View>
     }
 
