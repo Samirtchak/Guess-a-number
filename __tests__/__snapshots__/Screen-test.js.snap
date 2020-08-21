@@ -122,7 +122,7 @@ exports[`Screen tests  GameScreen render correctly 1`] = `
       }
     }
   >
-    68
+    58
   </Text>
   <View
     style={
@@ -239,7 +239,7 @@ exports[`Screen tests  GameScreen render correctly 1`] = `
     <View>
       <View>
         <Text>
-          68
+          58
         </Text>
       </View>
     </View>
